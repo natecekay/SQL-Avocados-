@@ -1,3 +1,12 @@
+/* Avocado Sales Analysis
+Author: Nathaniel Cekay
+An analysis of avocado sales data from the Hass Avocado Board website.
+The analysis was conducted using SQL.
+
+Citation: JOSEPH, VALENTIN (2021). Avocado sales 2015-2021. [Dataset]
+https://www.kaggle.com/datasets/valentinjoseph/avocado-sales-20152021-us-centric/data
+*/
+
 CREATE TABLE avocados (
 	Date date,
 	AveragePrice numeric,
@@ -76,7 +85,7 @@ SELECT round(
 		) AS r_squared
 FROM avocados;
 
-/* running an r-squared calculation confirms a strong correaltion 
+/* running an r-squared calculation confirms a strong correlation 
 of 0.92, indicating that about 92% of total volume can be 
 explained by the number of total bags sold*/
 
