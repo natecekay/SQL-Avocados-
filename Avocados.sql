@@ -64,7 +64,6 @@ FROM avocados;
 SELECT corr(large_avocados, totalbags)
     AS large_avocados_and_totalbags
 FROM avocados;
-
 /* large avocados sold and totalbags sold had a strong correlation of 0.800*/
 
 SELECT 
@@ -75,7 +74,6 @@ SELECT
 	    regr_intercept(totalvolume, totalbags)::numeric,2
 		) AS y_intercept
 FROM avocados;
-
 /* running a regression analysis confirms a strong positive
 correlation between total volume and total bags sold, with a 
 slope of 3.98*/
@@ -84,7 +82,6 @@ SELECT round(
 	    regr_r2(totalvolume, totalbags)::numeric,3
 		) AS r_squared
 FROM avocados;
-
 /* running an r-squared calculation confirms a strong correlation 
 of 0.92, indicating that about 92% of total volume can be 
 explained by the number of total bags sold*/
@@ -96,23 +93,11 @@ SELECT
 	dense_rank() OVER (ORDER BY totalbags DESC)
 FROM avocados
 ORDER BY totalbags DESC;
-
 /* Here we can see the top dates that sold the most total bags of avocados*/
-
-SELECT Date, totalbags, AveragePrice, year,
-	round(
-		 avg(AveragePrice)
-			 OVER(ORDER BY year, Date))
-		 AS averagebydate
-FROM avocados
-ORDER BY year, Date;
-
-/* Here I create a total sales column multiplying average price by total volume*/
 
 alter table avocados add column
 total_sales numeric GENERATED ALWAYS AS (AveragePrice * TotalVolume) STORED;
-
-/* Here I use a subquery to view the top 50th percentile cutoff for total_sales*/
+/* Here I create a total sales column multiplying the average price by total volume*/
 
 SELECT *
 FROM avocados
@@ -121,9 +106,7 @@ WHERE total_sales >= (
 	FROM avocados
 	)
 ORDER BY total_sales DESC;
-
-
-/* Here I use a subquery to view the top 90th percentile cutoff for total_sales*/
+/* Here I use a subquery to view the top 50th percentile cutoff for total_sales*/
 
 SELECT *
 FROM avocados
@@ -132,5 +115,5 @@ WHERE total_sales >= (
 	FROM avocados
 	)
 ORDER BY total_sales DESC;
-
+/* Here I use a subquery to view the top 90th percentile cutoff for total_sales*/
 
